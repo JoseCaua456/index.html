@@ -1,0 +1,794 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feliz Aniversário ✨</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Fontes Google: Cinzel (Fantasia), Orbitron (Espacial/Star Wars) e Plus Jakarta Sans (Legibilidade) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Orbitron:wght@600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        fantasy: ['Cinzel', 'serif'],
+                        space: ['Orbitron', 'sans-serif'],
+                        sans: ['Plus Jakarta Sans', 'sans-serif'],
+                    },
+                    animation: {
+                        'float': 'float 4s ease-in-out infinite',
+                        'twinkle': 'twinkle 3.5s ease-in-out infinite',
+                        'pulse-glow': 'pulseGlow 2.5s infinite',
+                        'page-enter': 'pageEnter 0.55s cubic-bezier(0.16, 1, 0.3, 1) forwards',
+                        'page-exit': 'pageExit 0.3s ease-in forwards',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0px)' },
+                            '50%': { transform: 'translateY(-8px)' },
+                        },
+                        twinkle: {
+                            '0%, 100%': { opacity: '0.25', transform: 'scale(0.85)' },
+                            '50%': { opacity: '1', transform: 'scale(1.2)' },
+                        },
+                        pulseGlow: {
+                            '0%, 100%': { boxShadow: '0 0 18px rgba(245, 158, 11, 0.35)' },
+                            '50%': { boxShadow: '0 0 32px rgba(245, 158, 11, 0.7)' },
+                        },
+                        pageEnter: {
+                            '0%': { opacity: '0', transform: 'translateY(18px) scale(0.98)' },
+                            '100%': { opacity: '1', transform: 'translateY(0) scale(1)' },
+                        },
+                        pageExit: {
+                            '0%': { opacity: '1', transform: 'translateY(0) scale(1)' },
+                            '100%': { opacity: '0', transform: 'translateY(-14px) scale(0.98)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Variáveis de Tema: Lua (Padrão), Sol e Secreto Star Wars */
+        :root {
+            --bg-primary: #090d16;
+            --bg-gradient: radial-gradient(circle at 50% 0%, #172038 0%, #090d16 70%);
+            --card-bg: rgba(19, 27, 46, 0.88);
+            --card-border: rgba(212, 175, 55, 0.38);
+            --text-main: #f3f4f6;
+            --text-muted: #9ca3af;
+            --accent-gold: #f59e0b;
+            --accent-gold-hover: #fbbf24;
+            --option-bg: rgba(30, 41, 59, 0.78);
+            --option-hover: rgba(51, 65, 85, 0.95);
+            --parchment-shadow: 0 20px 50px rgba(0, 0, 0, 0.65);
+        }
+
+        [data-theme="sun"] {
+            --bg-primary: #fdf6e7;
+            --bg-gradient: radial-gradient(circle at 50% 0%, #fffbeb 0%, #f5e6c8 100%);
+            --card-bg: rgba(255, 251, 240, 0.94);
+            --card-border: rgba(180, 120, 30, 0.4);
+            --text-main: #291d0e;
+            --text-muted: #6b5335;
+            --accent-gold: #b45309;
+            --accent-gold-hover: #92400e;
+            --option-bg: rgba(254, 243, 199, 0.7);
+            --option-hover: rgba(253, 230, 138, 0.9);
+            --parchment-shadow: 0 20px 45px rgba(120, 75, 20, 0.15);
+        }
+
+        /* Tema Secreto: Galáxia / Star Wars */
+        [data-theme="starwars"] {
+            --bg-primary: #010204;
+            --bg-gradient: radial-gradient(ellipse at 50% 10%, #091326 0%, #010204 80%);
+            --card-bg: rgba(6, 10, 18, 0.92);
+            --card-border: rgba(255, 232, 31, 0.65);
+            --text-main: #f8fafc;
+            --text-muted: #cbd5e1;
+            --accent-gold: #FFE81F;
+            --accent-gold-hover: #fff176;
+            --option-bg: rgba(15, 23, 42, 0.88);
+            --option-hover: rgba(30, 41, 59, 0.98);
+            --parchment-shadow: 0 0 32px rgba(56, 189, 248, 0.25), 0 0 12px rgba(255, 232, 31, 0.15);
+        }
+
+        body {
+            background-color: var(--bg-primary);
+            background-image: var(--bg-gradient);
+            color: var(--text-main);
+            transition: background-color 0.6s ease, color 0.6s ease;
+            overflow-x: hidden;
+            min-height: 100vh;
+            min-height: 100dvh;
+        }
+
+        /* Estilo Sci-Fi no Tema Star Wars */
+        [data-theme="starwars"] .font-fantasy {
+            font-family: 'Orbitron', sans-serif;
+            letter-spacing: 0.05em;
+        }
+
+        [data-theme="starwars"] .fantasy-card {
+            box-shadow: 0 0 25px rgba(56, 189, 248, 0.22), inset 0 0 20px rgba(255, 232, 31, 0.06);
+        }
+
+        /* Fundo adicional de névoa mística exclusivo para a página do Quiz */
+        .quiz-realm-aura {
+            background: radial-gradient(circle at 50% 50%, rgba(245, 158, 11, 0.12) 0%, rgba(99, 102, 241, 0.08) 45%, transparent 75%);
+        }
+
+        [data-theme="starwars"] .quiz-realm-aura {
+            background: radial-gradient(circle at 50% 50%, rgba(56, 189, 248, 0.18) 0%, rgba(255, 232, 31, 0.08) 45%, transparent 75%);
+        }
+
+        .fantasy-card {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            box-shadow: var(--parchment-shadow);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            transition: background 0.6s ease, border-color 0.6s ease, box-shadow 0.6s ease;
+        }
+
+        .option-btn {
+            background: var(--option-bg);
+            border: 1px solid var(--card-border);
+            transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .option-btn:hover:not(:disabled) {
+            background: var(--option-hover);
+            transform: translateY(-2px);
+            border-color: var(--accent-gold);
+        }
+
+        .option-btn:active:not(:disabled) {
+            transform: scale(0.98);
+        }
+
+        /* Partículas estelares de fundo */
+        .star-particle {
+            position: fixed;
+            border-radius: 50%;
+            pointer-events: none;
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+
+        [data-theme="sun"] .star-particle {
+            opacity: 0.16 !important;
+            background: #d97706 !important;
+        }
+
+        [data-theme="starwars"] .star-particle {
+            opacity: 1 !important;
+            box-shadow: 0 0 6px #ffffff, 0 0 12px #38bdf8;
+            animation: warpDrift 8s linear infinite !important;
+        }
+
+        @keyframes warpDrift {
+            0% { transform: translateY(0px) scale(1); opacity: 0.4; }
+            50% { opacity: 1; }
+            100% { transform: translateY(-35px) scale(1.25); opacity: 0.4; }
+        }
+    </style>
+</head>
+<body class="font-sans antialiased flex flex-col justify-between relative selection:bg-amber-500/30">
+
+    <!-- Camada de Partículas Celestiais / Espaciais -->
+    <div id="stars-container" class="fixed inset-0 pointer-events-none z-0 overflow-hidden"></div>
+
+    <!-- =====================================================================
+         BOTÃO FIXO DE ALTERNÂNCIA DE TEMA (SOL / LUA / GALÁXIA) - CANTO SUPERIOR DIREITO
+         Sempre acessível em todas as páginas
+         ===================================================================== -->
+    <header class="fixed top-4 right-4 z-40">
+        <button 
+            id="theme-toggle" 
+            type="button"
+            aria-label="Alternar tema visual"
+            class="fantasy-card flex items-center gap-2 px-3.5 py-2 rounded-full text-xs sm:text-sm font-semibold tracking-wide cursor-pointer hover:scale-105 active:scale-95 transition-transform"
+        >
+            <!-- Ícone Lua -->
+            <span id="icon-moon" class="flex items-center gap-1.5 text-amber-400">
+                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M21.752 15.002A9.718 9.718 0 0118 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 003 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 009.002-5.998z"/>
+                </svg>
+                <span>Lua</span>
+            </span>
+            <!-- Ícone Sol -->
+            <span id="icon-sun" class="hidden items-center gap-1.5 text-amber-700">
+                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M12 2.25a.75.75 0 01.75.75v2.25a.75.75 0 01-1.5 0V3a.75.75 0 01.75-.75zM7.5 12a4.5 4.5 0 119 0 4.5 4.5 0 01-9 0zM18.894 6.166a.75.75 0 00-1.06-1.06l-1.591 1.59a.75.75 0 101.06 1.061l1.591-1.59zM21.75 12a.75.75 0 01-.75.75h-2.25a.75.75 0 010-1.5H21a.75.75 0 01.75.75zM17.834 18.894a.75.75 0 001.06-1.06l-1.59-1.591a.75.75 0 10-1.061 1.06l1.59 1.591zM12 18a.75.75 0 01.75.75V21a.75.75 0 01-1.5 0v-2.25A.75.75 0 0112 18zM7.758 17.303a.75.75 0 00-1.061-1.06l-1.591 1.59a.75.75 0 001.06 1.061l1.591-1.59zM6 12a.75.75 0 01-.75.75H3a.75.75 0 010-1.5h2.25A.75.75 0 016 12zM6.697 7.757a.75.75 0 001.06-1.06l-1.59-1.591a.75.75 0 00-1.061 1.06l1.59 1.591z"/>
+                </svg>
+                <span>Sol</span>
+            </span>
+            <!-- Ícone Galáxia (Star Wars) -->
+            <span id="icon-starwars" class="hidden items-center gap-1.5 text-[#FFE81F]">
+                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M12 2L14.8 8.8L22 9.3L16.5 14L18.2 21L12 17.3L5.8 21L7.5 14L2 9.3L9.2 8.8L12 2Z"/>
+                </svg>
+                <span>Galáxia</span>
+            </span>
+        </button>
+    </header>
+
+    <!-- =====================================================================
+         VIEWPORT DE PÁGINAS EXCLUSIVAS (APENAS UMA PÁGINA ATIVA POR VEZ)
+         ===================================================================== -->
+    <main id="app-viewport" class="flex-1 flex items-center justify-center px-4 py-16 z-10 w-full max-w-lg mx-auto">
+        <!-- O conteúdo de cada página (Capa Inicial, Quiz ou Carta Final) é injetado exclusivamente aqui -->
+    </main>
+
+    <!-- =====================================================================
+         RODAPÉ COM O BOTÃO SECRETO DA NAVE ESPACIAL (3 CLIQUES)
+         ===================================================================== -->
+    <footer class="w-full py-4 px-5 flex items-center justify-between text-xs opacity-65 z-20">
+        <span>Feito especialmente para você ✨</span>
+        
+        <!-- Botão Secreto: Nave Espacial no Canto Inferior Direito -->
+        <button 
+            id="secret-padawan-btn" 
+            type="button"
+            title="Uma nave distante cruzando o hiperespaço..."
+            aria-label="Nave espacial secreta"
+            class="p-2.5 rounded-full hover:opacity-100 hover:text-[#FFE81F] transition-all cursor-pointer active:scale-90 select-none"
+        >
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+                <path d="M12 2L13.5 9V17L12 21L10.5 17V9L12 2Z" fill="currentColor" fill-opacity="0.25"/>
+                <path d="M10.5 11L3 7.5V9.5L10.5 14"/>
+                <path d="M13.5 11L21 7.5V9.5L13.5 14"/>
+                <path d="M10.5 14.5L4 17.5V19L10.5 16.5"/>
+                <path d="M13.5 14.5L20 17.5V19L13.5 16.5"/>
+                <path d="M3 5.5V9.5M21 5.5V9.5"/>
+            </svg>
+        </button>
+    </footer>
+
+    <!-- =====================================================================
+         MODAL DO EASTER EGG (JOVEM PADAWAN + TEMA STAR WARS)
+         ===================================================================== -->
+    <div id="secret-modal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-black/80 backdrop-blur-sm">
+        <div class="fantasy-card max-w-sm w-full rounded-3xl p-7 text-center border-2 border-[#FFE81F]/75 animate-page-enter relative shadow-[0_0_45px_rgba(255,232,31,0.28)]">
+            <div class="w-12 h-12 rounded-full bg-[#FFE81F]/15 text-[#FFE81F] flex items-center justify-center mx-auto mb-4">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+                    <path d="M12 2L13.5 9V17L12 21L10.5 17V9L12 2Z" fill="currentColor" fill-opacity="0.3"/>
+                    <path d="M10.5 11L3 7.5V9.5L10.5 14M13.5 11L21 7.5V9.5L13.5 14M10.5 14.5L4 17.5V19L10.5 16.5M13.5 14.5L20 17.5V19L13.5 16.5"/>
+                </svg>
+            </div>
+            <p class="uppercase tracking-widest text-[11px] font-bold text-[#FFE81F] mb-2">
+                Transmissão Secreta • Modo Galáxia Ativado
+            </p>
+            <p class="font-space text-base sm:text-lg font-bold leading-relaxed text-white mb-6">
+                parabéns pra vc jovem padawan, está bem atenta ao ponto de descobrir esse segredo
+            </p>
+            <button 
+                id="close-secret-modal" 
+                type="button"
+                class="w-full py-3 rounded-xl bg-[#FFE81F] hover:bg-yellow-300 text-black font-space font-bold text-xs sm:text-sm uppercase tracking-wider cursor-pointer transition-colors"
+            >
+                Que a Força esteja com você
+            </button>
+        </div>
+    </div>
+
+    <!-- =====================================================================
+         TEMPLATES DE PÁGINAS SEPARADAS (GARANTE QUE NADA FIQUE JUNTO NA TELA)
+         ===================================================================== -->
+    
+    <!-- TEMPLATE 1: PÁGINA INICIAL (CAPA DO PRESENTE) -->
+    <template id="tpl-page-intro">
+        <section class="fantasy-card w-full rounded-3xl p-7 sm:p-10 text-center relative overflow-hidden animate-page-enter">
+            <div class="flex justify-center mb-5">
+                <div class="w-16 h-16 rounded-full border border-amber-500/40 flex items-center justify-center bg-amber-500/10 animate-float">
+                    <svg class="w-8 h-8 text-amber-500" fill="none" stroke="currentColor" stroke-width="1.6" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 00-2.456 2.456zM16.894 20.567L16.5 21.75l-.394-1.183a2.25 2.25 0 00-1.423-1.423L13.5 18.75l1.183-.394a2.25 2.25 0 001.423-1.423l.394-1.183.394 1.183a2.25 2.25 0 001.423 1.423l1.183.394-1.183.394a2.25 2.25 0 00-1.423 1.423z" />
+                    </svg>
+                </div>
+            </div>
+
+            <p class="uppercase tracking-[0.25em] text-xs font-bold text-amber-500 mb-2">
+                Crônicas de um Novo Ciclo
+            </p>
+            
+            <h1 class="font-fantasy text-2xl sm:text-3xl font-bold leading-snug mb-4">
+                Feliz Aniversário! ✨
+            </h1>
+
+            <p class="text-sm sm:text-base leading-relaxed opacity-85 mb-8">
+                Hoje os astros se alinharam para celebrar mais uma volta sua ao redor do sol. Preparei um pequeno desafio encantado para testar o quanto você conhece a nossa história antes de revelar sua mensagem final.
+            </p>
+
+            <button 
+                id="btn-open-gift" 
+                type="button"
+                class="w-full sm:w-auto px-8 py-4 rounded-2xl bg-gradient-to-r from-amber-600 to-amber-500 hover:from-amber-500 hover:to-amber-400 text-white font-fantasy font-bold text-base sm:text-lg tracking-wider shadow-lg animate-pulse-glow cursor-pointer transition-all active:scale-95 flex items-center justify-center gap-2.5 mx-auto"
+            >
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M21 11.25v8.25a1.5 1.5 0 01-1.5 1.5H5.25a1.5 1.5 0 01-1.5-1.5v-8.25M12 4.875A2.625 2.625 0 109.375 7.5H12m0-2.625V7.5m0-2.625A2.625 2.625 0 1114.625 7.5H12m0 0V21m-8.625-9.75h18c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125h-18c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125z" />
+                </svg>
+                <span>Abrir Presente</span>
+            </button>
+        </section>
+    </template>
+
+    <!-- TEMPLATE 2: PÁGINA EXCLUSIVA DO QUIZ (CARREGADA SOMENTE APÓS CLICAR EM ABRIR PRESENTE) -->
+    <template id="tpl-page-quiz">
+        <div class="w-full relative animate-page-enter">
+            <!-- Aura temática de fantasia exclusiva da página do quiz -->
+            <div class="quiz-realm-aura fixed inset-0 pointer-events-none -z-10"></div>
+
+            <!-- Barra superior de navegação discreta -->
+            <div class="flex items-center justify-between mb-3 px-1">
+                <button 
+                    id="btn-back-intro" 
+                    type="button"
+                    class="text-xs font-semibold opacity-70 hover:opacity-100 flex items-center gap-1 cursor-pointer transition-opacity"
+                >
+                    <span>← Voltar à capa</span>
+                </button>
+                <span class="text-[11px] uppercase tracking-[0.2em] font-bold text-amber-500">
+                    Reino dos Enigmas ✨
+                </span>
+            </div>
+
+            <section class="fantasy-card w-full rounded-3xl p-6 sm:p-8 relative overflow-hidden">
+                <!-- Cabeçalho do Quiz -->
+                <div class="flex items-center justify-between text-xs font-semibold uppercase tracking-widest text-amber-500 mb-3">
+                    <span id="question-counter">Pergunta 1 de 6</span>
+                    <span id="score-badge">✨ 0 acertos</span>
+                </div>
+
+                <!-- Barra de Progresso -->
+                <div class="w-full h-1.5 bg-amber-500/20 rounded-full overflow-hidden mb-6">
+                    <div id="progress-bar" class="h-full bg-amber-500 transition-all duration-500 rounded-full" style="width: 16.6%;"></div>
+                </div>
+
+                <!-- Pergunta Atual -->
+                <h2 id="question-text" class="font-fantasy text-xl sm:text-2xl font-bold leading-snug mb-6">
+                    Carregando enigma...
+                </h2>
+
+                <!-- Opções -->
+                <div id="options-container" class="space-y-3 mb-5"></div>
+
+                <!-- Caixa de Feedback após responder -->
+                <div id="feedback-box" class="hidden rounded-2xl p-4 border border-amber-500/40 bg-amber-500/10 text-sm leading-relaxed mb-5 animate-page-enter">
+                    <p id="feedback-text" class="font-medium"></p>
+                </div>
+
+                <!-- Botão Avançar -->
+                <button 
+                    id="btn-next-question" 
+                    type="button"
+                    class="hidden w-full py-3.5 px-6 rounded-2xl bg-amber-600 hover:bg-amber-500 text-white font-fantasy font-bold tracking-wider text-sm sm:text-base cursor-pointer transition-all active:scale-95"
+                >
+                    Próxima Pergunta →
+                </button>
+            </section>
+        </div>
+    </template>
+
+    <!-- TEMPLATE 3: PÁGINA FINAL DE ANIVERSÁRIO (EXIBIDA EXCLUSIVAMENTE APÓS O QUIZ) -->
+    <template id="tpl-page-final">
+        <section class="fantasy-card w-full rounded-3xl p-7 sm:p-10 text-center animate-page-enter">
+            <div class="inline-flex items-center justify-center w-14 h-14 rounded-full bg-amber-500/15 border border-amber-500/40 text-amber-500 mb-4 animate-float">
+                <svg class="w-7 h-7" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M11.645 20.91l-.007-.003-.022-.012a15.247 15.247 0 01-.383-.218 25.18 25.18 0 01-4.244-3.17C4.688 15.36 2.25 12.174 2.25 8.25 2.25 5.322 4.714 3 7.688 3A5.5 5.5 0 0112 5.052 5.5 5.5 0 0116.313 3c2.973 0 5.437 2.322 5.437 5.25 0 3.925-2.438 7.111-4.739 9.256a25.175 25.175 0 01-4.244 3.17 15.247 15.247 0 01-.383.219l-.022.012-.007.004-.003.001a.752.752 0 01-.704 0l-.003-.001z"/>
+                </svg>
+            </div>
+
+            <p class="uppercase tracking-[0.2em] text-xs font-bold text-amber-500 mb-1">
+                Pergaminho Desbloqueado
+            </p>
+            <p id="final-score-text" class="text-xs font-semibold opacity-75 mb-3"></p>
+
+            <h2 id="final-title" class="font-fantasy text-2xl sm:text-3xl font-bold mb-4"></h2>
+
+            <div id="final-message" class="text-sm sm:text-base leading-relaxed opacity-90 space-y-3 text-left sm:text-center bg-amber-500/5 border border-amber-500/20 rounded-2xl p-5 mb-6"></div>
+
+            <div class="flex flex-wrap items-center justify-center gap-3">
+                <button 
+                    id="btn-restart-quiz" 
+                    type="button"
+                    class="px-5 py-2.5 rounded-xl border border-amber-500/40 text-xs sm:text-sm font-semibold text-amber-500 hover:bg-amber-500/10 cursor-pointer transition-colors"
+                >
+                    Refazer o Quiz ↺
+                </button>
+                <button 
+                    id="btn-go-home" 
+                    type="button"
+                    class="px-5 py-2.5 rounded-xl border border-amber-500/25 text-xs sm:text-sm font-semibold opacity-75 hover:opacity-100 cursor-pointer transition-opacity"
+                >
+                    Voltar ao Início
+                </button>
+            </div>
+        </section>
+    </template>
+
+    <!-- =====================================================================
+         SCRIPT DE NAVEGAÇÃO ENTRE PÁGINAS, QUIZ E TEMAS
+         ===================================================================== -->
+    <script>
+        /**
+         * ===================================================================
+         * DADOS DAS 6 PERGUNTAS E DA MENSAGEM FINAL
+         * ===================================================================
+         */
+        const QUIZ_DATA = [
+            {
+                question: "Por onde nós nos conhecemos?",
+                options: [
+                    { text: "Pelo Instagram (paia)", feedback: "eu pedi dps seu Instagram", isCorrect: false },
+                    { text: "Pelo Facebook (Boomer)", feedback: "coisa de velho kkkk", isCorrect: false },
+                    { text: "Pelo airbuds (aleatório)", feedback: "resposta correta, muito aleatório isso, só fui te parabenizar por me ultrapassar como maior ouvinte de novatroop", isCorrect: true },
+                    { text: "Pelo whatsapp (como?)", feedback: "nem teria como, não por meios comuns", isCorrect: false }
+                ]
+            },
+            {
+                question: "Qual o primeiro gosto q descobrimos ter em comum?",
+                options: [
+                    { text: "Música geek (cringe)", feedback: "resposta correta", isCorrect: true },
+                    { text: "Berserk (Edge 🦇)", feedback: "Não foi esse, apesar de ser pedrada!", isCorrect: false },
+                    { text: "Macacos (🐒)", feedback: "Ainda não chegamos nesse nível de evolução kkkk", isCorrect: false },
+                    { text: "Formigas (🧠)", feedback: "Definitivamente não foi sobre formigas!", isCorrect: false }
+                ]
+            },
+            {
+                question: "Oq vc mandou q me levou a conhecer sua voz pela primeira vez?",
+                options: [
+                    { text: "Áudio respondendo", feedback: "vc só começou a mandar áudios respondendo bem dps", isCorrect: false },
+                    { text: "Fomos em call pra jogar", feedback: "demoramos muito pra jogar juntos", isCorrect: false },
+                    { text: "Vídeo de vc falando algo", feedback: "resposta correta, foi num vídeo de vc mostrando a praia", isCorrect: true },
+                    { text: "Nunca ouvi sua voz de verdade", feedback: "😱", isCorrect: false }
+                ]
+            },
+            {
+                question: "Quais jogos já jogamos juntos?",
+                options: [
+                    { text: "Roblox, Dbd, Gartic", feedback: "bem q podíamos jogar Gartic, mas nunca rolou", isCorrect: false },
+                    { text: "Dbd, Fortnite, stop", feedback: "nunca jogamos Fortnite juntos 🥲", isCorrect: false },
+                    { text: "Stop, Dbd, Roblox", feedback: "boa, lembrou bem de todos q jogamos", isCorrect: true },
+                    { text: "Gartic, stop, Dbd, Roblox", feedback: "nunca chegamos a jogar Gartic juntos infelizmente", isCorrect: false }
+                ]
+            },
+            {
+                question: "Oq vc nunca faria?",
+                options: [
+                    { text: "Chutar mendigos na rua", feedback: "nunca falou q não faria isso 😱", isCorrect: false },
+                    { text: "Fumar", feedback: "disse q se fizesse não seria vc", isCorrect: true },
+                    { text: "Instaurar uma ditadura comunista", feedback: "nunca falou q não faria isso", isCorrect: false },
+                    { text: "Começar um esquema de rinha de galo", feedback: "acho q seria massa", isCorrect: false }
+                ]
+            },
+            {
+                question: "Quantos anos vc está fazendo?",
+                options: [
+                    { text: "10", feedback: "Nah", isCorrect: false },
+                    { text: "0", feedback: "tá renascendo?", isCorrect: false },
+                    { text: "Todos", feedback: "virou o próprio conceito de tempo", isCorrect: true },
+                    { text: "Parou de contar dps do 3° digito", feedback: "Calma lá, também não precisa exagerar kkkk", isCorrect: false }
+                ]
+            }
+        ];
+
+        // EDITE AQUI O TÍTULO E A MENSAGEM FINAL DE ANIVERSÁRIO:
+        const FINAL_MESSAGE_CONFIG = {
+            title: "Feliz Aniversário! 🐧✨",
+            paragraphs: [
+                "Parabéns por mais um ano de vida! Que este novo ciclo traga muita saúde, tranquilidade, conquistas incríveis e dias leves para você.",
+                "Desde aquele começo totalmente aleatório no Airbuds até hoje, quis preparar esse cantinho especial para celebrar o seu dia e lembrar o quanto torço para você realizar todos os seus planos.",
+                "Aproveite muito o seu aniversário hoje. Que nunca faltem motivos para você sorrir!"
+            ]
+        };
+
+        /**
+         * ===================================================================
+         * GERENCIAMENTO DE ROTAS/PÁGINAS E INTERATIVIDADE
+         * ===================================================================
+         */
+        document.addEventListener('DOMContentLoaded', () => {
+            const htmlEl = document.documentElement;
+            const viewport = document.getElementById('app-viewport');
+
+            const themeToggleBtn = document.getElementById('theme-toggle');
+            const iconMoon = document.getElementById('icon-moon');
+            const iconSun = document.getElementById('icon-sun');
+            const iconStarWars = document.getElementById('icon-starwars');
+
+            const secretBtn = document.getElementById('secret-padawan-btn');
+            const secretModal = document.getElementById('secret-modal');
+            const closeSecretModal = document.getElementById('close-secret-modal');
+
+            // Estado global
+            let currentQuestionIndex = 0;
+            let score = 0;
+            let currentTheme = 'moon'; // 'moon' | 'sun' | 'starwars'
+            let starWarsUnlocked = false;
+            let isTransitioning = false;
+
+            // 1. Criar partículas de estrelas no fundo
+            function createStars() {
+                const container = document.getElementById('stars-container');
+                const starCount = 70;
+                for (let i = 0; i < starCount; i++) {
+                    const star = document.createElement('div');
+                    star.className = 'star-particle animate-twinkle';
+                    const size = Math.random() * 2.6 + 1;
+                    star.style.width = `${size}px`;
+                    star.style.height = `${size}px`;
+                    star.style.left = `${Math.random() * 100}%`;
+                    star.style.top = `${Math.random() * 100}%`;
+                    star.style.background = i % 4 === 0 ? '#FFE81F' : (i % 3 === 0 ? '#38bdf8' : '#ffffff');
+                    star.style.animationDelay = `${Math.random() * 4}s`;
+                    star.style.opacity = `${Math.random() * 0.75 + 0.2}`;
+                    container.appendChild(star);
+                }
+            }
+            createStars();
+
+            // 2. Alternância de Tema (Lua / Sol / Galáxia)
+            function applyTheme(themeName) {
+                currentTheme = themeName;
+                
+                iconMoon.classList.add('hidden');
+                iconMoon.classList.remove('flex');
+                iconSun.classList.add('hidden');
+                iconSun.classList.remove('flex');
+                iconStarWars.classList.add('hidden');
+                iconStarWars.classList.remove('flex');
+
+                if (themeName === 'moon') {
+                    htmlEl.removeAttribute('data-theme');
+                    iconMoon.classList.remove('hidden');
+                    iconMoon.classList.add('flex');
+                } else if (themeName === 'sun') {
+                    htmlEl.setAttribute('data-theme', 'sun');
+                    iconSun.classList.remove('hidden');
+                    iconSun.classList.add('flex');
+                } else if (themeName === 'starwars') {
+                    htmlEl.setAttribute('data-theme', 'starwars');
+                    iconStarWars.classList.remove('hidden');
+                    iconStarWars.classList.add('flex');
+                }
+            }
+
+            themeToggleBtn.addEventListener('click', () => {
+                if (currentTheme === 'moon') {
+                    applyTheme('sun');
+                } else if (currentTheme === 'sun') {
+                    applyTheme(starWarsUnlocked ? 'starwars' : 'moon');
+                } else {
+                    applyTheme('moon');
+                }
+            });
+
+            // 3. Navegação entre páginas exclusivas com transição suave
+            function navigateToPage(pageName, skipExitAnim = false) {
+                if (isTransitioning) return;
+
+                const renderTarget = () => {
+                    viewport.innerHTML = '';
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+
+                    if (pageName === 'intro') {
+                        mountIntroPage();
+                    } else if (pageName === 'quiz') {
+                        mountQuizPage();
+                    } else if (pageName === 'final') {
+                        mountFinalPage();
+                    }
+                    isTransitioning = false;
+                };
+
+                const currentChild = viewport.firstElementChild;
+                if (currentChild && !skipExitAnim) {
+                    isTransitioning = true;
+                    currentChild.classList.remove('animate-page-enter');
+                    currentChild.classList.add('animate-page-exit');
+                    setTimeout(renderTarget, 260);
+                } else {
+                    renderTarget();
+                }
+            }
+
+            // 4. Montar Página 1: Capa Inicial Exclusiva
+            function mountIntroPage() {
+                const tpl = document.getElementById('tpl-page-intro');
+                const clone = tpl.content.cloneNode(true);
+                viewport.appendChild(clone);
+
+                const btnOpenGift = document.getElementById('btn-open-gift');
+                btnOpenGift.addEventListener('click', () => {
+                    currentQuestionIndex = 0;
+                    score = 0;
+                    navigateToPage('quiz');
+                });
+            }
+
+            // 5. Montar Página 2: Página Exclusiva do Quiz
+            function mountQuizPage() {
+                const tpl = document.getElementById('tpl-page-quiz');
+                const clone = tpl.content.cloneNode(true);
+                viewport.appendChild(clone);
+
+                const btnBackIntro = document.getElementById('btn-back-intro');
+                const btnNextQuestion = document.getElementById('btn-next-question');
+
+                btnBackIntro.addEventListener('click', () => {
+                    navigateToPage('intro');
+                });
+
+                btnNextQuestion.addEventListener('click', () => {
+                    if (currentQuestionIndex < QUIZ_DATA.length - 1) {
+                        currentQuestionIndex++;
+                        renderCurrentQuestion();
+                    } else {
+                        navigateToPage('final');
+                    }
+                });
+
+                renderCurrentQuestion();
+            }
+
+            function renderCurrentQuestion() {
+                const currentData = QUIZ_DATA[currentQuestionIndex];
+                const total = QUIZ_DATA.length;
+
+                const questionCounter = document.getElementById('question-counter');
+                const scoreBadge = document.getElementById('score-badge');
+                const progressBar = document.getElementById('progress-bar');
+                const questionText = document.getElementById('question-text');
+                const optionsContainer = document.getElementById('options-container');
+                const feedbackBox = document.getElementById('feedback-box');
+                const btnNextQuestion = document.getElementById('btn-next-question');
+
+                questionCounter.textContent = `Pergunta ${currentQuestionIndex + 1} de ${total}`;
+                scoreBadge.textContent = `✨ ${score} ${score === 1 ? 'acerto' : 'acertos'}`;
+                progressBar.style.width = `${((currentQuestionIndex + 1) / total) * 100}%`;
+                questionText.textContent = currentData.question;
+
+                optionsContainer.innerHTML = '';
+                feedbackBox.classList.add('hidden');
+                btnNextQuestion.classList.add('hidden');
+
+                currentData.options.forEach((optionObj, index) => {
+                    const btn = document.createElement('button');
+                    btn.type = 'button';
+                    btn.className = 'option-btn w-full text-left p-4 rounded-2xl text-sm sm:text-base font-medium flex items-center gap-3 cursor-pointer';
+                    
+                    const letter = String.fromCharCode(65 + index);
+                    btn.innerHTML = `
+                        <span class="w-7 h-7 rounded-full border border-amber-500/50 text-amber-500 font-fantasy font-bold text-xs flex items-center justify-center shrink-0">
+                            ${letter}
+                        </span>
+                        <span>${optionObj.text}</span>
+                    `;
+
+                    btn.addEventListener('click', () => handleAnswerSelection(index));
+                    optionsContainer.appendChild(btn);
+                });
+            }
+
+            function handleAnswerSelection(selectedIndex) {
+                const currentData = QUIZ_DATA[currentQuestionIndex];
+                const chosenOption = currentData.options[selectedIndex];
+                const optionsContainer = document.getElementById('options-container');
+                const feedbackBox = document.getElementById('feedback-box');
+                const feedbackText = document.getElementById('feedback-text');
+                const scoreBadge = document.getElementById('score-badge');
+                const btnNextQuestion = document.getElementById('btn-next-question');
+
+                const allButtons = optionsContainer.querySelectorAll('button');
+
+                allButtons.forEach((btn, idx) => {
+                    btn.disabled = true;
+                    btn.classList.add('opacity-65', 'cursor-default');
+                    const opt = currentData.options[idx];
+
+                    if (opt.isCorrect) {
+                        btn.classList.remove('opacity-65');
+                        btn.style.borderColor = '#10b981';
+                        btn.style.backgroundColor = 'rgba(16, 185, 129, 0.18)';
+                    } else if (idx === selectedIndex && !opt.isCorrect) {
+                        btn.classList.remove('opacity-65');
+                        btn.style.borderColor = '#ef4444';
+                        btn.style.backgroundColor = 'rgba(239, 68, 68, 0.15)';
+                    }
+                });
+
+                if (chosenOption.isCorrect) {
+                    score++;
+                    scoreBadge.textContent = `✨ ${score} ${score === 1 ? 'acerto' : 'acertos'}`;
+                }
+
+                feedbackText.textContent = chosenOption.feedback;
+                feedbackBox.classList.remove('hidden');
+
+                btnNextQuestion.textContent = currentQuestionIndex < QUIZ_DATA.length - 1 
+                    ? 'Próxima Pergunta →' 
+                    : 'Revelar Mensagem Final ✨';
+                btnNextQuestion.classList.remove('hidden');
+            }
+
+            // 6. Montar Página 3: Tela Final Exclusiva
+            function mountFinalPage() {
+                const tpl = document.getElementById('tpl-page-final');
+                const clone = tpl.content.cloneNode(true);
+                viewport.appendChild(clone);
+
+                const finalScoreText = document.getElementById('final-score-text');
+                const finalTitle = document.getElementById('final-title');
+                const finalMessage = document.getElementById('final-message');
+                const btnRestartQuiz = document.getElementById('btn-restart-quiz');
+                const btnGoHome = document.getElementById('btn-go-home');
+
+                finalScoreText.textContent = `Você acertou ${score} de ${QUIZ_DATA.length} perguntas!`;
+                finalTitle.textContent = FINAL_MESSAGE_CONFIG.title;
+                finalMessage.innerHTML = FINAL_MESSAGE_CONFIG.paragraphs
+                    .map(p => `<p>${p}</p>`)
+                    .join('');
+
+                btnRestartQuiz.addEventListener('click', () => {
+                    currentQuestionIndex = 0;
+                    score = 0;
+                    navigateToPage('quiz');
+                });
+
+                btnGoHome.addEventListener('click', () => {
+                    currentQuestionIndex = 0;
+                    score = 0;
+                    navigateToPage('intro');
+                });
+            }
+
+            // 7. Easter Egg: 3 Cliques na Nave Espacial do Rodapé
+            let secretClickCount = 0;
+            let secretResetTimer = null;
+
+            secretBtn.addEventListener('click', () => {
+                secretClickCount++;
+
+                clearTimeout(secretResetTimer);
+                secretResetTimer = setTimeout(() => {
+                    secretClickCount = 0;
+                }, 2000);
+
+                if (secretClickCount >= 3) {
+                    secretClickCount = 0;
+                    clearTimeout(secretResetTimer);
+
+                    starWarsUnlocked = true;
+                    applyTheme('starwars');
+
+                    secretModal.classList.remove('hidden');
+                    secretModal.classList.add('flex');
+                }
+            });
+
+            closeSecretModal.addEventListener('click', () => {
+                secretModal.classList.add('hidden');
+                secretModal.classList.remove('flex');
+            });
+
+            secretModal.addEventListener('click', (e) => {
+                if (e.target === secretModal) {
+                    secretModal.classList.add('hidden');
+                    secretModal.classList.remove('flex');
+                }
+            });
+
+            // Inicializar exclusivamente na Página 1 (Capa Inicial)
+            navigateToPage('intro', true);
+        });
+    </script>
+</body>
+</html>
